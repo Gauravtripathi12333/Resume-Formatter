@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Resume - {{ name }}</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    .section {
+      margin-bottom: 20px;
+    }
+
+    .section-header {
+      background-color: #f0f0f0;
+      padding: 8px;
+      font-weight: bold;
+      border: 1px solid #ddd;
+      margin-bottom: 10px;
+    }
+
+    .contact-info {
+      text-align: left;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    .company-experience {
+      margin-bottom: 15px;
+    }
+
+    .company-name {
+      font-weight: bold;
+      color: #2c3e50;
+    }
+
+    .role-duration {
+      font-style: italic;
+      color: #666;
+    }
+
+    .responsibilities {
+      margin-left: 20px;
+    }
+
+    .skills-list {
+      columns: 2;
+      margin-left: 20px;
+    }
+
+    .education-item {
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 15px;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    ul {
+      margin: 5px 0;
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 3px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="contact-info">
+    <h3>{{data.name }}</h3>
+  </div>
+
+  <!-- Professional Summary -->
+  <div class="section">
+     <div style="display: flex; align-items: center; width: 100%; border-collapse: collapse;">
+    <!-- Left blue block -->
+    <div style="background-color: #204D74; height: 20px; width: 60px;"></div>
+    
+    <!-- Grey label box with text -->
+    <div style="background-color: #d9d9d9;height: 20px; width: 60px  padding: 4px 15px; font-weight: bold; border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
+      Professional Summary 
+    </div>
+    
+    <!-- Right blue bar -->
+    <div style="background-color: #204D74; height: 20px; flex-grow: 1;"></div>
+  </div>
+    <p>{{ data.Professional_Summary }}</p>
+  </div>
+
+  <!-- Technical Skill Sets -->
+  <div class="section">
+     <div style="display: flex; align-items: center; width: 100%; border-collapse: collapse;">
+    <!-- Left blue block -->
+    <div style="background-color: #204D74; height: 20px; width: 60px;"></div>
+    
+    <!-- Grey label box with text -->
+    <div style="background-color: #d9d9d9;height: 20px; width: 60px  padding: 4px 15px; font-weight: bold; border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
+       Technical Skill
+    </div>
+    
+    <!-- Right blue bar -->
+    <div style="background-color: #204D74; height: 20px; flex-grow: 1;"></div>
+  </div>
+    <div class="skills-list">
+      {% for skill in data.Technical_Skill_Sets %}
+      <div>{{ skill }}</div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Work Experience -->
+  <div class="section">
+     <div style="display: flex; align-items: center; width: 100%; border-collapse: collapse;">
+    <!-- Left blue block -->
+    <div style="background-color: #204D74; height: 20px; width: 60px;"></div>
+    
+    <!-- Grey label box with text -->
+    <div style="background-color: #d9d9d9; height: 20px; width: 60px padding: 4px 15px; font-weight: bold; border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
+      Work Experience
+    </div>
+    
+    <!-- Right blue bar -->
+    <div style="background-color: #204D74; height: 20px; flex-grow: 1;"></div>
+  </div>
+    {% for experience in data.Work_Experience %}
+    <div class="company-experience">
+      <div class="company-name">{{ experience.Company }}</div>
+      <div class="role-duration">{{ experience.Role }} | {{ experience.Duration }}</div>
+      <div class="responsibilities">
+        <ul>
+          {% for responsibility in experience.Key_Responsibilities %}
+          <li>{{ responsibility }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Academic Background -->
+  <div class="section">
+     <div style="display: flex; align-items: center; width: 100%; border-collapse: collapse;">
+    <!-- Left blue block -->
+    <div style="background-color: #204D74; height: 20px; width: 60px;"></div>
+    
+    <!-- Grey label box with text -->
+    <div style="background-color: #d9d9d9;height: 20px; width: 60px  padding: 4px 15px; font-weight: bold; border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
+      Academic Background
+    </div>
+    
+    <!-- Right blue bar -->
+    <div style="background-color: #204D74; height: 20px; flex-grow: 1;"></div>
+  </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Qualification</th>
+          <th>Institute</th>
+          <th>percentage</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for education in data.Academic_Background %}
+        <tr>
+          <td>{{ education.Qualification }}</td>
+          <td>{{ education.Institute }}</td>
+          <td>{{ education.percentage }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- Certifications and Awards -->
+    {% if data.Certifications %}
+    <div style="margin-top: 15px;">
+      <div style="display: flex; align-items: center; width: 100%; border-collapse: collapse;">
+        <!-- Left blue block -->
+        <div style="background-color: #204D74; height: 20px; width: 60px;"></div>
+
+        <!-- Grey label box with text -->
+        <div
+          style="background-color: #d9d9d9;height: 20px; width: 60px  padding: 4px 15px; font-weight: bold; border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
+          Certifications
+        </div>
+
+        <!-- Right blue bar -->
+        <div style="background-color: #204D74; height: 20px;flex-grow: 1;"></div>
+      </div>
+        <ul>
+          {% for cert in data.Certifications %}
+          <li>{{ cert }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      <!-- Extra-curricular Activities -->
+      {% if data.Extra_Curricular_Activities %}
+
+      <body style="font-family: Arial, sans-serif;">
+
+        <div style="display: flex; align-items: center; width: 100%; border-collapse: collapse;">
+          <!-- Left blue block -->
+          <div style="background-color: #204D74; height: 20px; width: 60px;"></div>
+
+          <!-- Grey label box with text -->
+          <div
+            style="background-color: #d9d9d9; height: 20px; width: 60px padding: 4px 15px; font-weight: bold; border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
+            Extra-curricular Activities
+          </div>
+
+          <!-- Right blue bar -->
+          <div style="background-color: #204D74; height: 20px; flex-grow: 1;"></div>
+        </div>
+        <ul>
+          {% for activity in data.Extra_Curricular_Activities %}
+          <li>{{ activity }}</li>
+          {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+  </div>
+</body>
+
+</html>

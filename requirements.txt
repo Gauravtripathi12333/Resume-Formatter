@@ -1,0 +1,13 @@
+flask
+jinja2
+pdfkit
+wkhtmltopdf
+langchain
+langchain-community
+langchain-google-genai
+google-genai
+python-dotenv
+pypdf
+python-docx
+docx2txt
+
