@@ -11,3 +11,4 @@ pypdf
 python-docx
 docx2txt
 weasyprint
+flask-cors

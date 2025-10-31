@@ -11,6 +11,7 @@ from jinja2 import Environment, FileSystemLoader
 from weasyprint import HTML
 from dotenv import load_dotenv
 from io import BytesIO
+from flask_cors import CORS_
 
 # -----------------------------
 # INITIAL SETUP
