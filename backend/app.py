@@ -15,7 +15,7 @@ from io import BytesIO
 # -----------------------------
 # INITIAL SETUP
 # -----------------------------
-app = Flask(__name__)
+app = Flask(__name__,template_folder=os.path.join("..", "templates"))
 load_dotenv()
 port = int(os.environ.get("PORT", 5000))
 
@@ -26,6 +26,9 @@ UPLOAD_FOLDER = "uploads"
 OUTPUT_FOLDER = "output"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+TEMPLATE_DIR = os.path.join(BASE_DIR, "../templates")
+UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
 
 # -----------------------------
 # LANGCHAIN PROMPT TEMPLATE
@@ -99,8 +102,10 @@ def convert_to_json(resume_text: str):
 # GENERATE COMPANY PDF
 # -----------------------------
 def generate_company_resume(data_json, name="Candidate", contact="example@email.com", filename="resume"):
-    env = Environment(loader=FileSystemLoader("templates"))
-    template = env.get_template("company_resume_exact_template.html")
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    template_dir = os.path.join(base_dir, "../templates")
+    env = Environment(loader=FileSystemLoader(template_dir))
+    template = env.get_template("company_resume_exact_templates.html")
 
     html_content = template.render(name=name, contact=contact, data=data_json)
     pdf_path = os.path.join(OUTPUT_FOLDER, f"{os.path.splitext(filename)[0]}_formatted.pdf")
