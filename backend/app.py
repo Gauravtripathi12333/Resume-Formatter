@@ -17,7 +17,7 @@ from io import BytesIO
 # INITIAL SETUP
 # -----------------------------
 app = Flask(__name__,template_folder=os.path.join("..", "templates"))
-CORS(app, resources={r"/*": {"origins": "https://resume-formatter-gdnq.vercel.app/"}}) 
+CORS(app, resources={r"/*": {"origins": "https://resume-formatter-gdnq.vercel.app"}}) 
 load_dotenv()
 port = int(os.environ.get("PORT", 5000))
 
