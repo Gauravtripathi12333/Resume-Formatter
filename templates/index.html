@@ -1,28 +1,78 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Resume Formatter</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        .container { max-width: 600px; margin: 0 auto; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input, textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
-        button { background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
-        button:hover { background-color: #0056b3; }
-    </style>
+  <title>Resume Formatter</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; background-color: #f8f9fa; }
+    .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    .form-group { margin-bottom: 15px; }
+    label { display: block; margin-bottom: 5px; font-weight: bold; }
+    input, textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+    button { background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background-color: #0056b3; }
+    #loading { display: none; margin-top: 10px; color: #007bff; font-weight: bold; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Resume Formatter</h1>
-        <form action="/upload" method="post" enctype="multipart/form-data">  
-            <div class="form-group">
-                <label for="resume">Upload Resume (PDF/DOCX):</label>
-                <input type="file" id="resume" name="resume" accept=".pdf,.docx,.doc" multiple required>
-            </div>
-            
-            <button type="submit">Format Resume</button>
-        </form>
-    </div>
+  <div class="container">
+    <h1>Resume Formatter</h1>
+
+    <form id="resumeForm">
+      <div class="form-group">
+        <label for="resume">Upload Resume (PDF/DOCX):</label>
+        <input type="file" id="resume" name="resume" accept=".pdf,.docx,.doc" multiple required>
+      </div>
+
+    
+
+    
+
+      <button type="submit">Format Resume</button>
+      <div id="loading">Processing your resumes... please wait ⏳</div>
+    </form>
+  </div>
+
+  <script>
+    // 🟢 Replace this with your Render backend URL
+    const BACKEND_URL = "https://resume-formatter.onrender.com";
+
+    document.getElementById("resumeForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const loading = document.getElementById("loading");
+      loading.style.display = "block";
+
+      const formData = new FormData(event.target);
+
+      try {
+        const response = await fetch(`${BACKEND_URL}/upload`, {
+          method: "POST",
+          body: formData
+        });
+
+        if (!response.ok) {
+          alert("Error uploading resume. Please try again.");
+          return;
+        }
+
+        // Download ZIP returned by Flask backend
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "Formatted_Resumes.zip";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+
+        alert("✅ Resumes formatted successfully!");
+      } catch (error) {
+        alert("Error: " + error.message);
+      } finally {
+        loading.style.display = "none";
+      }
+    });
+  </script>
 </body>
 </html>
